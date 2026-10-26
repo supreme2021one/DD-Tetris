@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#10151f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icon.svg" />
+    <title>DD Tetris — Falling Blocks Together</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="DD Tetris home">
+        <span class="brand-mark"><i></i><i></i><i></i><i></i></span>
+        <span>DD <span class="brand-accent">TETRIS</span></span>
+      </a>
+      <button id="installButton" class="install-button" type="button" hidden>＋ INSTALL APP</button>
+      <div class="topbar-note"><span class="status-dot"></span> QUICK PLAY · NO ACCOUNT NEEDED</div>
+    </header>
+
+    <main>
+      <section id="lobby" class="lobby view">
+        <div class="hero-copy">
+          <div class="eyebrow"><span>✦</span> A little friendly competition</div>
+          <h1>Drop in.<br /><span>Stack together.</span></h1>
+          <p>A bright little block-stacking battle. Play solo, share a keyboard, or invite a friend with a room code.</p>
+          <div class="hero-pills"><span>⌁ Easy to learn</span><span>◉ Private rooms</span><span>♡ Family friendly</span></div>
+        </div>
+
+        <div class="lobby-card">
+          <div class="card-topline"><span class="card-icon">▦</span><span>CHOOSE YOUR GAME</span></div>
+          <label class="player-name-field" for="playerName">PLAYER NAME<input id="playerName" maxlength="20" autocomplete="nickname" placeholder="Enter your name" /></label>
+          <button id="soloButton" class="mode-button primary-mode">
+            <span class="mode-icon">▤</span><span class="mode-copy"><strong>Solo run</strong><small>Chase your best score</small></span><span class="mode-arrow">↗</span>
+          </button>
+          <button id="localButton" class="mode-button">
+            <span class="mode-icon orange">♟</span><span class="mode-copy"><strong>Local duel</strong><small>Two players, one device</small></span><span class="mode-arrow">↗</span>
+          </button>
+          <div class="divider"><span id="onlineDividerLabel">OR PLAY ONLINE</span></div>
+          <label id="serverAddressField" class="player-name-field server-address-field hidden" for="serverAddress">PHONE-TO-PHONE SERVER<input id="serverAddress" type="url" inputmode="url" autocomplete="url" placeholder="https://your-game-server" /><small>Enter the same secure server address on both phones.</small></label>
+          <button id="createButton" class="online-button"><span>＋</span> Create a private room</button>
+          <form id="joinForm" class="join-row">
+            <input id="roomInput" maxlength="6" autocomplete="off" placeholder="ROOM CODE" aria-label="Room code" />
+            <button type="submit">Join <span>→</span></button>
+          </form>
+          <p id="lobbyMessage" class="lobby-message" aria-live="polite">Online play needs the game server to be running.</p>
+          <section class="leaderboard" aria-labelledby="leaderboardTitle">
+            <div class="leaderboard-heading"><strong id="leaderboardTitle">HI-SCORE</strong><span>TOP 10</span></div>
+            <ol id="leaderboardList" class="leaderboard-list"><li class="leaderboard-empty">Loading scores…</li></ol>
+            <p id="leaderboardStatus" class="leaderboard-status">Scores are shared by players using this game server.</p>
+          </section>
+        </div>
+
+        <div class="lobby-footer"><span>Made for quick rounds and happy rematches.</span><span>DD TETRIS <b>v0.1</b></span></div>
+      </section>
+
+      <section id="game" class="game view hidden">
+        <div class="game-heading">
+          <button id="backButton" class="back-button">← <span>Menu</span></button>
+          <div class="game-title-wrap"><div class="eyebrow"><span>✦</span> <span id="modeLabel">SOLO RUN</span></div><h2 id="gameTitle">Your next best run.</h2></div>
+          <div id="roomBadge" class="room-badge hidden"><small>ROOM</small><strong id="roomCodeLabel">------</strong><button id="copyRoomButton" title="Copy room code">▢</button></div>
+        </div>
+
+        <div class="game-layout">
+          <article class="player-panel self-panel">
+            <div class="player-header"><div class="player-name"><span class="avatar avatar-mint">YOU</span><div><strong id="selfName">Player 1</strong><small id="selfStatus">Ready when you are</small></div></div><span class="live-tag"><i></i> LIVE</span></div>
+            <div class="board-shell"><canvas id="board1" width="300" height="600" aria-label="Your game board"></canvas><div id="overlay1" class="board-overlay hidden"><strong id="overlay1Title">Ready?</strong><span id="overlay1Text">Press a key to start.</span></div></div>
+            <div class="board-stats"><div><small>SCORE</small><strong id="score1">000000</strong></div><div><small>LINES</small><strong id="lines1">00</strong></div><div><small>LEVEL</small><strong id="level1">01</strong></div></div>
+          </article>
+
+          <aside id="versusColumn" class="versus-column"><div class="versus-mark">VS</div><div class="attack-note"><span>✦</span><p>Clear lines<br />to send a<br /><b>little surprise.</b></p><small>DD TETRIS? Clear the marked line in 20s to send it back!</small></div><div id="connectionStatus" class="connection-status"><i></i><span>LOCAL</span></div></aside>
+
+          <article id="opponentPanel" class="player-panel opponent-panel hidden">
+            <div class="player-header"><div class="player-name"><span id="avatar2" class="avatar avatar-peach">P2</span><div><strong id="opponentName">Player 2</strong><small id="opponentStatus">Waiting to join</small></div></div><span id="opponentTag" class="opponent-tag">OPPONENT</span></div>
+            <div class="board-shell"><canvas id="board2" width="300" height="600" aria-label="Opponent game board"></canvas><div id="overlay2" class="board-overlay"><strong id="overlay2Title">Waiting for a player</strong><span id="overlay2Text">Share your room code to invite them.</span></div></div>
+            <div class="board-stats"><div><small>SCORE</small><strong id="score2">000000</strong></div><div><small>LINES</small><strong id="lines2">00</strong></div><div><small>LEVEL</small><strong id="level2">01</strong></div></div>
+          </article>
+
+          <aside id="sidePanel" class="side-panel">
+            <div class="mini-card"><div class="mini-title">NEXT UP <span>↘</span></div><canvas id="nextCanvas" width="128" height="115"></canvas></div>
+            <div class="mini-card hold-card"><div class="mini-title">HOLD <span>◇</span></div><canvas id="holdCanvas" width="128" height="92"></canvas></div>
+            <div id="controlsCard" class="controls-card"><div class="mini-title">CONTROLS <span>⌘</span></div><div id="controlsText" class="controls-text"></div><div class="touch-decks"><div class="touch-player-deck"><span class="touch-player-label">PLAYER 1</span><div class="touch-controls" aria-label="Player 1 touch controls"><button data-player="1" data-action="left" aria-label="Player 1 move left">←</button><button data-player="1" data-action="rotate" aria-label="Player 1 rotate">↻</button><button data-player="1" data-action="right" aria-label="Player 1 move right">→</button><button data-player="1" data-action="down" aria-label="Player 1 soft drop">↓</button><button data-player="1" data-action="hold" aria-label="Player 1 hold piece">HOLD</button><button data-player="1" data-action="drop" aria-label="Player 1 hard drop">DROP</button></div></div><div id="touchDeck2" class="touch-player-deck hidden"><span class="touch-player-label">PLAYER 2</span><div class="touch-controls" aria-label="Player 2 touch controls"><button data-player="2" data-action="left" aria-label="Player 2 move left">←</button><button data-player="2" data-action="rotate" aria-label="Player 2 rotate">↻</button><button data-player="2" data-action="right" aria-label="Player 2 move right">→</button><button data-player="2" data-action="down" aria-label="Player 2 soft drop">↓</button><button data-player="2" data-action="hold" aria-label="Player 2 hold piece">HOLD</button><button data-player="2" data-action="drop" aria-label="Player 2 hard drop">DROP</button></div></div></div></div>
+            <button id="pauseButton" class="pause-button">Ⅱ <span>Pause</span></button>
+          </aside>
+        </div>
+        <div id="gameMessage" class="game-message" aria-live="polite"></div>
+        <div class="game-footer"><span>Tip: line up a few rows, then clear them together.</span><span>PLAY FAIR · HAVE FUN</span></div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

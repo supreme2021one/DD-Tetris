@@ -1,0 +1,9 @@
+{
+  "name": "dd-tetris",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A small browser-based falling-block game with solo, local and room-code multiplayer.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

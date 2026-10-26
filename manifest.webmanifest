@@ -1,0 +1,15 @@
+{
+  "id": "/",
+  "name": "DD Tetris",
+  "short_name": "DD Tetris",
+  "description": "A colorful falling-block game for solo play and friendly duels.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#171b2b",
+  "theme_color": "#171b2b",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
